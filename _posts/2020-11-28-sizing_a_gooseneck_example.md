@@ -24,7 +24,7 @@ Suppose an atmospheric storage tank with a normal venting requirement, as calula
 
 For notation, the flow begins at the pipe entrance (1) and ends at the exit (2).
 
-![image.png](/images/sizing_a_gooseneck_example_files/att3.png)
+![image.png](/images/sizing_a_gooseneck_example_files/att3.jpg)
 
 For the pipe bends the bend radius to diameter ratio needs to be specified, I'm going to suppose $r/D = 1.5$. Another important parameter is the pipe roughness, $\epsilon$, which for commercial steel is $\epsilon = 0.0457 \mathrm{mm}$[^1]. At this point I could specify a length for the straight section of pipe, a fixed height above the tank roof that is independent of the final chosen diameter of the piping, or I could fix a design and scale the whole vent up and down as required. For simplicity I am going to assume 3ft of piping.
 

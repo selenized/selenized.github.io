@@ -23,7 +23,4 @@ titles_from_headings:
 
 markdown: kramdown
 kramdown:
-  math_engine: katex
-  input: GFM
-  auto_ids: true
-  hard_wrap: false
+  math_engine: mathjax
