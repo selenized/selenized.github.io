@@ -1,1 +1,24 @@
-theme: jekyll-theme-leap-day
+title: a chemical engineer's notebook
+description: this is where I post random notebooks where I noodle around with code and work through examples of engineering problems and how to solve them
+github_username: selenized
+
+timezone: America/Edmonton
+
+permalink: /:year/:month/:day/:title/
+
+exclude: _notebooks
+
+use_math: true
+
+theme: minima
+
+plugins:
+  - jekyll-feed
+  - jekyll-github-metadata
+
+titles_from_headings:
+  enabled: true
+  strip_title: true
+  collections: true
+
+
