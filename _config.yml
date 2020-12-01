@@ -10,7 +10,7 @@ exclude: _notebooks
 
 use_math: true
 
-theme: jekyll-theme-leap-day
+theme: minima
 
 plugins:
   - jekyll-feed
