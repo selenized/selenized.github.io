@@ -83,7 +83,7 @@ pˢ(Tᵣ)>pₐ
 
 Since the vapour pressure within the vessel is greater than atmospheric, at ambient temperature, the butane within the storage sphere is a liquid. In general one would have to account for flashing and two-phase flow during the release, however for very short discharge distances (<10cm) there is typically not enough time for the liquid to flash during discharge[^3], over the thickness of a hole this especially true. The butane discharged from the tank will be a stream of liquid initially and the simple Bernoulli equation for a liquid jet can be used[^4].
 
-$$ Q_l = c_d \rho_l A_h \sqrt{ 2 \left( p - p_a \over \rho_l \right) + 2gh_l } = c_d \rho_l {{\pi \over 4} d_h^2} \sqrt{ 2 \left( p - p_a \over \rho_l \right) + 2gh_l } $$
+$$ Q_l = c_d \rho_l A_h \sqrt{ 2 \left( p - p_a \over \rho_l \right) + 2gh_l } = c_d \rho_l { {\pi \over 4} d_h^2} \sqrt{ 2 \left( p - p_a \over \rho_l \right) + 2gh_l } $$
 
 
 Where $Q_l$ is the mass flow of liquid discharged through the hole (in kg/s), $c_d$ is the discharge coefficient which can be assumed to be 0.61[^5], $g$ is the acceleration due to gravity $9.81 m/s^2$ and the rest are as defined earlier. I am assuming, here, that the hole is circular for simplicity.
@@ -111,7 +111,7 @@ Qₗ = cd * ρₗ(Tᵣ) * π/4 * dₕ^2 * √( 2*(p - pₐ)/ρₗ(Tᵣ) + 2*g*h�
 
 Since the butane is significantly above it's normal boiling point, as the liquid stream exits the storage sphere it will flash. However not all of it will flash into a vapour as the quantity that can vapourize is limited by the available energy. A simplified model of flashing is to assume the process is so rapid that it is effectively adiabatic and, from a simple steady-state energy balance, one arrives at the following[^6]
 
-$$f_v = {Q_v \over Q_l} = { {c_p (T_r - T_b)} \over {\Delta H_v}}$$
+$$f_v = {Q_v \over Q_l} = { {c_p (T_r - T_b)} \over {\Delta H_v} }$$
 
 where $f_v$ is the mass fraction that flashes and $Q_v$ is the mass flow of liquid that flashes (in kg/s) and recall that the heat capacity and latent heat are functions of temperature.
 
@@ -137,7 +137,7 @@ Qᵥ(t) = fᵥ*Qₗ
 As the butane flashes into a gas, some of the liquid stream will be entrained as an aerosol. The presence of aerosolized droplets are a major contributor to the overall mass of a vapour cloud and it is important to include them. There is a wide array of methods for estimating the aerosolized fraction, from as simple as assuming it is 1-2x the flashed fraction to more detailed models that take into account the different mechanisms behind aerosolization and rain-out.
 
 The aerosol fraction, $f_a$, the fraction of the liquid remaining in the cloud after flashing, in the form of aerosolized droplets.
-$$ f_a = {Q_a \over { Q_l - Q_v }}$$
+$$ f_a = {Q_a \over { Q_l - Q_v } }$$
 
 One method is to estimate the droplet size and from that determine the degree of rain out (i.e. the liquid that *does not* remain in the cloud) through a model of droplet settling. I am going to use the RELEASE model of droplet settling to determine the aerosol fraction.
 
@@ -155,7 +155,7 @@ $$ We = { { \rho_g u_d^2 d_p } \over \sigma } $$
 
 Where $\rho_g$ is the density of the gas, $u_d$ the discharge velocity, $d_p$ the mean droplet diameter, and $\sigma$ the surface tension. Experimentally, droplet breakup occurs at a critical Weber number between 12 and 22, and so the mean droplet size can be estimated by re-arranging[^7]
 
-$$ d_p = { { \sigma We_c } \over {\rho_g u_d^2 }} $$
+$$ d_p = { { \sigma We_c } \over {\rho_g u_d^2 } } $$
 
 and solving at the critical Weber number $We_c = 12$, assuming $\rho_g = \rho_a$ to be the density of ambient air, and with the discharge velocity $u_d$ given as:
 
@@ -163,7 +163,7 @@ $$ u_d = { Q_l \over { c_d A_h \rho_l} } = { Q_l \over {c_d \frac{\pi}{4} d_h^2 
 
 The diameter of droplets from flashing breakup can be calculated from the following empirical correlation[^8] and the mean droplet diameter is simply the smallest of either the aerodynamic or flashing diameter[^9] In almost all cases that are relevant for release modeling capillary breakup is not significant.
 
-$$ d_p = { {0.03} \over {10 + 4.0 \cdot (T - T_b)}}$$
+$$ d_p = { {0.03} \over {10 + 4.0 \cdot (T - T_b)} }$$
 
 ![image.png](/images/butane_leak_example_files/att2.png)
 
@@ -219,11 +219,11 @@ $$ \left( \rho_l - \rho_g \right) g \cdot d_c - \frac{3}{4} C_D \rho_g u_c^2 = 0
 
 Where $C_D$ is the drag coefficient, which for a solid sphere in viscous flow is given by this correlation[^11] (this could be an opportunity for improvement to the RELEASE model as liquid droplets and bubbles do not experience drag in the same way as solids, because there are internal flows that can dissipate some of that energy)
 
-$$ C_D = 0.4 + {24 \over Re} + {6 \over {1 - \sqrt{Re}}} $$
+$$ C_D = 0.4 + {24 \over Re} + {6 \over {1 - \sqrt{Re} } } $$
 
 with the Reynolds number $Re$ as
 
-$$ Re = {{\rho_g u_c d_c} \over \mu_a} $$
+$$ Re = { {\rho_g u_c d_c} \over \mu_a} $$
 
 for simplicity the gas density $\rho_g$ can be calculated assuming an ideal gas, and $\mu_a$ is the viscosity of air.
 
@@ -258,7 +258,7 @@ $$ f_a = { {F_m \left( d_c \right)} \over {F_m \left( \infty \right)} } $$
 
 Where $F_m(d)$ is the cumulative mass distribution function for droplets. This is based on a log-normal distribution and is given as
 
-$$ F_m \left( d \right) = \left( \frac{\pi}{6} \rho_l d_p^3 \right) \int_0^t { t^2 \over {\sqrt{2 \pi} \log{\sigma_G}} }{\exp \left( -\frac{1}{2} \left( \log{t} \over \log{\sigma_G} \right)^2 \right)} dt$$
+$$ F_m \left( d \right) = \left( \frac{\pi}{6} \rho_l d_p^3 \right) \int_0^t { t^2 \over {\sqrt{2 \pi} \log{\sigma_G} } }{\exp \left( -\frac{1}{2} \left( \log{t} \over \log{\sigma_G} \right)^2 \right)} dt$$
 
 Where $t = d/d_p$ and $\sigma_G$ is another tuning parameter (the default value given is 1.8).
 
@@ -270,11 +270,11 @@ Where $t = d/d_p$ and $\sigma_G$ is another tuning parameter (the default value 
 With a change of variables $z = \log{t}$ and $s = \log{\sigma_g}$ the cumulative mass distribution function [can be integrated](https://www.wolframalpha.com/input/?i=integrate+%281%2F%28sqrt%282*pi%29*s%29%29*exp%283z%29*exp%28-%281%2F2%29*%28z%2Fs%29%5E2%29+dz):
 $$ F_m \left( d \right) = \left( \frac{\pi}{6} \rho_l d_p^3 \right) \int_{-\infty}^z { 1 \over {\sqrt{2 \pi} s} }{\exp \left( 3z \right) \exp \left(-\frac{1}{2} \left( z \over s \right)^2 \right)} dz = \left( \frac{\pi}{6} \rho_l d_p^3 \right) \frac{-1}{2} \exp \left( 9s^2 \over 2 \right) \left[ \mathrm{erf} \left( {3s^2 - z} \over {\sqrt{2} s} \right) \right]_{-\infty}^z $$
 
-$$F_m \left( d \right) = \left( \frac{\pi}{6} \rho_l d_p^3 \right) \exp \left( 9 \left( \log{\sigma_G} \right)^2 \over 2 \right) \frac{1}{2} \left[ 1 - \mathrm{erf} \left( {3 \left( \log{\sigma_G} \right)^2 - \log{d} + \log{d_p} } \over {\sqrt{2} \log{\sigma_G}} \right) \right]$$
+$$F_m \left( d \right) = \left( \frac{\pi}{6} \rho_l d_p^3 \right) \exp \left( 9 \left( \log{\sigma_G} \right)^2 \over 2 \right) \frac{1}{2} \left[ 1 - \mathrm{erf} \left( {3 \left( \log{\sigma_G} \right)^2 - \log{d} + \log{d_p} } \over {\sqrt{2} \log{\sigma_G} } \right) \right]$$
 
 where $\mathrm{erf}\left( x \right)$ is the error function. Finally the aerosol fraction is:
 
-$$ f_a = { {F_m \left( d_c \right)} \over {F_m \left( \infty \right)} } = \frac{1}{2} \left[ 1 - \mathrm{erf} \left( {3 \left( \log{\sigma_G} \right)^2 - \log{d_c} + \log{d_p} } \over {\sqrt{2} \log{\sigma_G}} \right) \right]$$
+$$ f_a = { {F_m \left( d_c \right)} \over {F_m \left( \infty \right)} } = \frac{1}{2} \left[ 1 - \mathrm{erf} \left( {3 \left( \log{\sigma_G} \right)^2 - \log{d_c} + \log{d_p} } \over {\sqrt{2} \log{\sigma_G} } \right) \right]$$
 
 The RELEASE code uses this formula and also does a check for extreme cases, defaulting to either 1 or 0.
 
@@ -349,7 +349,7 @@ In general the evaporation rate is derived from a heat balance accounting for th
 
 For a cryogenic liquid spilled on land a simple model of the evaporative flux $G_e$ in kg/s/m² is[^14]
 
-$$ G_e = { {Mw} \over {\Delta H_v} } { k \left( T_s - T_l \right) \over \sqrt{\pi \alpha t}} $$
+$$ G_e = { {Mw} \over {\Delta H_v} } { k \left( T_s - T_l \right) \over \sqrt{\pi \alpha t} } $$
 
 Where $k$ is the thermal conductivity of the surface (ground) in W/m/K, $T_s$ is the temperature of the surface in K, $T_l$ the temperature of the liquid in K, and $\alpha$ the thermal diffusivity of the surface in m²/s
 
