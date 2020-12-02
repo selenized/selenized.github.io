@@ -8,6 +8,8 @@ timezone: America/Edmonton
 
 permalink: /:year/:month/:day/:title/
 
+include: _pages
+
 exclude: _notebooks
 
 use_math: true
