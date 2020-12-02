@@ -2,6 +2,8 @@
 title: "Chemical Release Screening Example - Airborne Quantity from a Butane leak"
 excerpt_separator: "<!--more-->"
 toc: true
+toc_label: "contents"
+toc_sticky: true
 categories:
   - examples
 tags:

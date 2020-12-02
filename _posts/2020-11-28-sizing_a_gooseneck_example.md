@@ -2,6 +2,8 @@
 title: "Compressible Flow Example - Sizing a goose neck vent"
 excerpt_separator: "<!--more-->"
 toc: true
+toc_label: "contents"
+toc_sticky: true
 categories:
   - examples
 tags:

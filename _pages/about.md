@@ -3,8 +3,6 @@ permalink: /about/
 title: "About"
 ---
 
-# about
-
 ## showing my work
 
 Whenever I run into a problem I need to solve I do what everyone does: I google it. Frequently some random person's blog comes up detailing how they set about solving the problem. So I figured if I was already doing the work, for my own interest, might as well publish it? Be the random person's blog I want to see in the world, or something like that.
