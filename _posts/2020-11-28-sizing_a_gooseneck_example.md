@@ -95,11 +95,11 @@ The black line conservatively takes the max of either the laminar or turbulent f
 
 The Churchill correlation is[^3]
 
-    $$ A = \left( 2.457 \ln\left( {1 \over {\left( \frac{7}{Re} \right)^{0.9} + 0.27\kappa} } \right) \right)^{16} $$
-    
-    $$ B = \left( \frac{37530}{Re} \right)^{16} $$
-    
-    $$ f = 8 \left( \left( \frac{8}{Re} \right)^{12} + { 1 \over {\left( A+B \right)^{3/2} } } \right)^{1/12} $$
+$$ A = \left( 2.457 \ln\left( {1 \over {\left( \frac{7}{Re} \right)^{0.9} + 0.27\kappa} } \right) \right)^{16} $$
+
+$$ B = \left( \frac{37530}{Re} \right)^{16} $$
+
+$$ f = 8 \left( \left( \frac{8}{Re} \right)^{12} + { 1 \over {\left( A+B \right)^{3/2} } } \right)^{1/12} $$
 
 The turbulent friction factor is the friction factor at fully turbulent flow, when *f* is no longer dependent upon the Reynolds number.
 
@@ -127,7 +127,7 @@ fT(κ) = 0.25/log10(κ/3.7)^2
 
 Since the vent has a constant cross sectional area, the mass velocity, $G$, is constant throughout
 
-    $$ G = \frac{4 \dot{m} }{\pi D^2} $$
+$$ G = \frac{4 \dot{m} }{\pi D^2} $$
 
 Where $\dot{m}$ is the mass flow rate in kg/s flowing through the vent, which is
 $$\dot{m} = Q_{std} \cdot \rho \left(p_{std}, T_{std} \right) $$
@@ -137,7 +137,7 @@ with $Q$ the flow at standard conditions and $\rho$ the density at standard cond
 
 The Reynolds number in terms of the mass velocity is
 
-    $$ Re = \frac{G D}{\mu} $$
+$$ Re = \frac{G D}{\mu} $$
 
 The only parameter in the Reynolds number which is not a constant is the viscosity, $\mu$, which is mostly dependent upon temperature and not pressure. So, to a very good first approximation, the Reynolds number is only a function of temperature. Which is very convenient.
 
@@ -157,7 +157,7 @@ For problems, like this vent, where the pressure drop is expected to be small it
 
 To check whether or not the incompressible assumption is reasonable, consider the ratio of density inside the tank (at the max allowable pressure) to the density outside the tank, assuming ambient temperature. For an ideal gas this is
 
-    $$ { \rho_1 \over \rho_2 } = { {p_1  Mw} \over {R  T_a} } { {R T_a} \over {p_2 Mw} } = \frac{p_1}{p_2} = \frac{p_{max} }{p_a}$$
+$$ { \rho_1 \over \rho_2 } = { {p_1  Mw} \over {R  T_a} } { {R T_a} \over {p_2 Mw} } = \frac{p_1}{p_2} = \frac{p_{max} }{p_a}$$
 
 
 ```julia
@@ -171,7 +171,7 @@ Typically flows are considered incompressible if the density varies by less than
 
 The mechanical energy balance for an incompressible fluid is[^4]
 
-    $$ p_1 - p_2 = \alpha_2 \frac{\rho v_2^2}{2} - \alpha_1 \frac{\rho v_1^2}{2} + \rho g \left( h_2 - h_1 \right) + \sum_j K_j \frac{\rho v^2}{2} $$
+$$ p_1 - p_2 = \alpha_2 \frac{\rho v_2^2}{2} - \alpha_1 \frac{\rho v_1^2}{2} + \rho g \left( h_2 - h_1 \right) + \sum_j K_j \frac{\rho v^2}{2} $$
 
 With the following simplifications
 + given the assumption of incompressible flow and a vent with a constant cross-sectional area $v_1 = v_2 = v$, 
@@ -180,11 +180,11 @@ With the following simplifications
 
 This becomes 
 
-    $$ p_1 - p_2 = \sum_j K_j \frac{\rho v^2}{2} $$
+$$ p_1 - p_2 = \sum_j K_j \frac{\rho v^2}{2} $$
 
 Where the velocity, $v$ is
 
-    $$ v = \frac{Q}{A} = { Q \over { \frac{\pi}{4} D^2 } } $$
+$$ v = \frac{Q}{A} = { Q \over { \frac{\pi}{4} D^2 } } $$
 
 Which can be solved algebraically for $D$, where $\rho$ is taken at the average pressure. That said it is easier to solve it numerically.
 
@@ -220,9 +220,9 @@ Isothermal compressible flow of an ideal gas is fairly straight forward. As alre
 The assumption that the flow is isothermal is very reasonable in this case. We are assuming normal venting from a tank at thermal equilibrium with it's surroundings, that is that the air flowing through the vent starts and ends in reservoirs of equal temperature. As gases expand the temperature decreases but the pressure drop across the vent is small so this effect should be negligible.
 
 A quick check is to estimate the ratio of temperatures at the start and end of the vent assuming a frictionless adiabatic expansion
-    $$ p_1^{1-k} T_1^k = p_2^{1-k} T_2^k = \mathrm{const}$$
+$$ p_1^{1-k} T_1^k = p_2^{1-k} T_2^k = \mathrm{const}$$
 
-    $$ \frac{T_2}{T_1} = \left( p_1 \over p_2 \right)^{ {1-k} \over k}$$
+$$ \frac{T_2}{T_1} = \left( p_1 \over p_2 \right)^{ {1-k} \over k}$$
 
 
 ```julia
@@ -236,7 +236,7 @@ So we expect even in the most extreme case the temperature change is ~2%, justif
 
 The isothermal flow of an ideal gas going through a length of piping is[^5]
 
-    $$ p_{1}^{2} = G^{2} \frac{RT}{Mw} \left[ \sum \limits_{j} K_{j} + 2\ln \frac{p_{1} }{p_{2} } \right] + p_{2}^{2} $$
+$$ p_{1}^{2} = G^{2} \frac{RT}{Mw} \left[ \sum \limits_{j} K_{j} + 2\ln \frac{p_{1} }{p_{2} } \right] + p_{2}^{2} $$
 
 If we assume the system is at thermal equilibrium with the outside air, then $T = T_a$ and $p_2 = p_a$
 
@@ -273,11 +273,11 @@ There are a few ways of setting up the calculations. We could assume the gas exi
 
 One thing we should check before proceeding is whether or not the flow will be choked, essentially will the flow velocity reach $Ma = 1$, the following discussion assumes flow remains sub-sonic, and this is easy to check. The critical pressure, at which flow becomes sonic, is given by[^6]
 
-    $$ { p^o \over p_1 } = \left(2 \over k+1 \right)^{k \over {k-1} } $$
+$$ { p^o \over p_1 } = \left(2 \over k+1 \right)^{k \over {k-1} } $$
 
 with the criteria that flow is sub-sonic if
 
-    $$ { p_2 \over p_1 } > { p^o \over p_1 } $$
+$$ { p_2 \over p_1 } > { p^o \over p_1 } $$
 
 [^6]: *Perry's* pg 6-23 equation 6-119
 
@@ -291,7 +291,7 @@ with the criteria that flow is sub-sonic if
 
 The basic relation of Fanno flow that drives the equations is the relationship between the Fanno parameter and the Mach number[^7]
 
-    $$ Fa = \left( \frac{fL^{*} }{D} \right) = \frac{1 - Ma^{2} }{kMa^{2} } + \frac{k+1}{2k} \ln \left( \frac{ \left( k+1 \right) Ma^{2} }{ 2+\left( k+1 \right) Ma^{2} } \right) $$
+$$ Fa = \left( \frac{fL^{*} }{D} \right) = \frac{1 - Ma^{2} }{kMa^{2} } + \frac{k+1}{2k} \ln \left( \frac{ \left( k+1 \right) Ma^{2} }{ 2+\left( k+1 \right) Ma^{2} } \right) $$
 
 Where I am defining $Fa$ to be the Fanno parameter. The Fanno parameter is calculated from some point in the flow path through to the critical point, where flow goes sonic. The critical point can be a hypothetical point, assuming the pipe is infinite, or it can be real. In this case I am assuming the flow within the vent will remain subsonic.
 
@@ -299,21 +299,21 @@ It is worth noting that elbows near the exit of a pipe may choke the flow even t
 
 For two points along a pipe, 1 and 2, the difference between their Fanno parameters is the frictional loss between those two points[^8]
 
-    $$ Fa_1 - Fa_2 = \sum_{j} K_{j} $$
+$$ Fa_1 - Fa_2 = \sum_{j} K_{j} $$
 
 Where the $K_j$ are usually evaluated at the *average* temperature ${ {T_1 + T_2} \over 2}$.
 
 The Mach number at some point *i* along the pipe, for an ideal gas, is given by[^9]
 
-    $$ Ma_{i} = \frac{v}{c} = \frac{G}{p_{i} } \sqrt{ \frac{RT_{i} }{kMw} } $$
+$$ Ma_{i} = \frac{v}{c} = \frac{G}{p_{i} } \sqrt{ \frac{RT_{i} }{kMw} } $$
 
 and the pressure can be calculated given a Mach number by re-arranging
 
-    $$ p_{i} = \frac{G}{Ma_{i} } \sqrt{ \frac{RT_{i} }{kMw} } $$
+$$ p_{i} = \frac{G}{Ma_{i} } \sqrt{ \frac{RT_{i} }{kMw} } $$
 
 and for any two points along the pipe the temperatures are related by[^10]
 
-    $$ T_{1} = T_{2} \frac{2 + \left( k-1 \right) Ma_{2}^{2} }{2 + \left( k-1 \right) Ma_{1}^{2} } $$
+$$ T_{1} = T_{2} \frac{2 + \left( k-1 \right) Ma_{2}^{2} }{2 + \left( k-1 \right) Ma_{1}^{2} } $$
 
 
 Putting all of this together, the procedure for adiabatic ideal gas flow through the piping with a given diameter $D$ is:
