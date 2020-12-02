@@ -39,7 +39,7 @@ kramdown:
 author:
   name   : "allan"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : "My awesome biography constrained to a sentence or two goes here."
+  bio    : ""
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
