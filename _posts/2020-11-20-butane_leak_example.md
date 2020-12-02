@@ -4,11 +4,12 @@ excerpt_separator: "<!--more-->"
 toc: true
 toc_label: "contents"
 toc_sticky: true
+comments: true
 categories:
   - examples
 tags:
   - hazard screening
-  - release
+  - chemical releases
 ---
 
 # Chemical Release Screening Example - Airborne Quantity from a Butane leak
@@ -234,7 +235,7 @@ $$ \left( \rho_l - \rho_g \right) g \cdot \frac{\pi}{6} d_c^3 = \frac{1}{2} C_D 
 
 $$ \left( \rho_l - \rho_g \right) g \cdot d_c - \frac{3}{4} C_D \rho_g u_c^2 = 0$$
 
-Where $C_D$ is the drag coefficient, which for a solid sphere in viscous flow is given by this correlation[^11] (this could be an opportunity for improvement to the RELEASE model as liquid droplets and bubbles do not experience drag in the same way as solids, because there are internal flows that can dissipate some of that energy)
+Where $C_D$ is the drag coefficient, which for a solid sphere in viscous flow is given by this correlation[^11]
 
 $$ C_D = 0.4 + {24 \over Re} + {6 \over {1 - \sqrt{Re} } } $$
 
@@ -249,6 +250,7 @@ This relationship will have to be solved numerically to get the critical diamete
 [^10]: *RELEASE - A Model with Data to Predict Aerosol Rainout in Accidental Releases* pg 63
 
 [^11]: From White, F.M, *Viscous Fluid Flow*, McGraw-Hill, New York, 1974
+    this could be an opportunity for improvement to the RELEASE model as liquid droplets and bubbles do not experience drag in the same way as solids, due to internal flows that can dissipate energy
 
 
 ```julia

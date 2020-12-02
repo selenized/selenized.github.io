@@ -4,6 +4,7 @@ excerpt_separator: "<!--more-->"
 toc: true
 toc_label: "contents"
 toc_sticky: true
+comments: true
 categories:
   - examples
 tags:
