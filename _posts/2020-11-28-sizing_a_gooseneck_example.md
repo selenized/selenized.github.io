@@ -220,6 +220,7 @@ Isothermal compressible flow of an ideal gas is fairly straight forward. As alre
 The assumption that the flow is isothermal is very reasonable in this case. We are assuming normal venting from a tank at thermal equilibrium with it's surroundings, that is that the air flowing through the vent starts and ends in reservoirs of equal temperature. As gases expand the temperature decreases but the pressure drop across the vent is small so this effect should be negligible.
 
 A quick check is to estimate the ratio of temperatures at the start and end of the vent assuming a frictionless adiabatic expansion
+
 $$ p_1^{1-k} T_1^k = p_2^{1-k} T_2^k = \mathrm{const}$$
 
 $$ \frac{T_2}{T_1} = \left( p_1 \over p_2 \right)^{ {1-k} \over k}$$
@@ -242,7 +243,7 @@ If we assume the system is at thermal equilibrium with the outside air, then $T 
 
 The only unknown is *p<sub>1</sub>*, which can be solved for numerically.
 
-[^5:] *Perry's* pg 6-23 equation 6-114, this equation also neglects changes in elevation
+[^5]: *Perry's* pg 6-23 equation 6-114, this equation also neglects changes in elevation
 
 
 ```julia
@@ -316,7 +317,7 @@ and for any two points along the pipe the temperatures are related by[^10]
 $$ T_{1} = T_{2} \frac{2 + \left( k-1 \right) Ma_{2}^{2} }{2 + \left( k-1 \right) Ma_{1}^{2} } $$
 
 
-Putting all of this together, the procedure for adiabatic ideal gas flow through the piping with a given diameter $D$ is:
+Putting all of this together, the procedure for adiabatic ideal gas flow through piping with a given diameter $D$ is:
 1. Given $G$ calculate $Ma_2$ at ambient conditions, this is the initial guess for the exit conditions
 1. Calculate $\sum_j K_j$ at ambient conditions, this is the initial guess for the frictional loss
 1. Calculate $Fa_2$ with $Ma_2$
@@ -424,6 +425,9 @@ In general the incompressible model will always *overestimate* the pressure drop
 
 Often things like compressible flow can be intimidating since these problems, even in the simplified ideal gas case, require iterative solutions and often iterative solutions within iterative solutions. However, once the basic pieces are set up, compressible flow can be fairly simple to deal with. There are some pitfalls here that, if one wanted to create a nice generalized set of code, would have to be dealt with.
 
-The big one being all the `find_zero()` calls rely on the initial guess being a good one, or the bracketed values actually bracketing the answer. It's more than possible to supply a terrible initial guess, especially for pipe diameter, and have the root solver fail outright. Adding some code to both check that guesses are within the domains of functions would be a start, e.g. catching attempts to take `log(0)` and returning `-Inf` or something to ensure that the root-finding algorithms respect function domains. This also presents an opportunity to generate better default values, programatically, prior to solving. As opposed to me just picking reasonable numbers off the top of my head and having everything work out because I'm lucky.
+The big one being all the `find_zero()` calls that rely on the initial guess being a good one, or the bracketed values actually bracketing the answer. It's more than possible to supply a terrible initial guess, especially for pipe diameter, and have the root solver fail outright. Adding some code to check that guesses are within the domains of functions would be a start, e.g. catching attempts to take `log(0)` and returning `-Inf` or something to ensure that the root-finding algorithms respect function domains. This also presents an opportunity to generate better default values, programatically, prior to solving. As opposed to me just picking reasonable numbers off the top of my head and having everything work out because I'm lucky.
 
 Relatedly there is a lot of room to fiddle around with which root finding algorithm is employed, this intersects with a design decision I made early on to use the library `Unitful` to track units throughout and ensure unit consistency. Unfortunately it does not play nicely with all root finding algorithms, for example the Brent method, as implemented in the `Roots` library, threw a bunch of arcane errors related to unit consistency when I tried using it. To get around this one could add a step to strip out units before solving and then add them back in after.
+
+---
+

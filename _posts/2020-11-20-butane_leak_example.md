@@ -451,3 +451,6 @@ That said, this notebook is far from perfect. Probably the biggest simplificatio
 For re-useability the lowest hanging fruit for changes would be to link this to a database of substance properties. Probably the most tedious part of using this notebook is finding and filling in all of the correlations at the beginning for the various temperature dependent material properties. There's no reason why a small database couldn't be set up, containing everything in a given plant's inventory, and some code added so the notebook can look up the properties for you.
 
 There are also lots of opportunities for embedding some of the decision logic into the notebook, I set up the notebook to do a liquid discharge because I knew what the scenario was. Furthermore I knew that the boiling point of butane is less than ambient and so the pool evaporation would be for a cryogenic liquid spill. There's no reason why the logic behind those decisions, and others, couldn't be generalized and the notebook set-up to choose which model was appropriate in a clear and transparent way.
+
+---
+
