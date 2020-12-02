@@ -1,6 +1,8 @@
 title: a chemical engineer's notebook
 description: this is where I post random notebooks where I noodle around with code and work through examples of engineering problems and how to solve them
 github_username: selenized
+minimal_mistakes_skin: dirt
+search: true
 
 timezone: America/Edmonton
 
@@ -10,11 +12,15 @@ exclude: _notebooks
 
 use_math: true
 
-theme: minima
+remote_theme: mmistakes/minimal-mistakes
 
 plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
   - jekyll-feed
-  - jekyll-github-metadata
+  - jemoji
+  - jekyll-include-cache
 
 titles_from_headings:
   enabled: true
@@ -27,3 +33,48 @@ kramdown:
   input: GFM
   auto_ids: true
   hard_wrap: false
+
+author:
+  name   : "allan"
+  avatar : "/assets/images/bio-photo.jpg"
+  bio    : "My awesome biography constrained to a sentence or two goes here."
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/selenized"
+
+
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/selenized/selenized.github.io"
+
+
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: false
+      comments: true
+      share: true
+      related: false
+  # _pages
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
