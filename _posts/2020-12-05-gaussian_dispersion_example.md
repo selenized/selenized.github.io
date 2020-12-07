@@ -89,7 +89,7 @@ Where $V_s^o$ is the volumetric flow of flue gas at *standard coonditions*, $B_{
 
 + the default value for $B_{wa} = 0.027$
 + $\%O_{2w}$ usually ranges from 2-6% and for this case I am assuming $\%O_{2w} = 4$
-+ from Method 19 for natural gas, $F_w = 2.85 \times 10^-7 \mathrm{sm^3 \over J}$
++ from Method 19 for natural gas, $F_w = 2.85 \times 10^{-7} \mathrm{sm^3 \over J}$
 
 [^m19-1]: [EPA Method 19](https://www.epa.gov/sites/production/files/2017-08/documents/method_19.pdf) is used for calculating emissions given a measured concentration in the stack, here equation 19.2 for concentrations on a wet basis is used.
 [^m19-2]: *EPA Method 19* Table 19-2
@@ -148,7 +148,7 @@ For carbon monoxide there are three concentrations of interest[^niosh] worth con
 
 
 
-[^ccohs]: For example [CCOHS](https://www.ccohs.ca/oshanswers/hsprograms/occ_hygiene/occ_exposure_limits.html) recommends calculating the sum $$ \sum_i {C_i \over T_i } $$ for each substance *i* where *C* is the observed concentration and *T* is the threshold, and this sum should be less than one.
+[^ccohs]: For example [CCOHS](https://www.ccohs.ca/oshanswers/hsprograms/occ_hygiene/occ_exposure_limits.html) recommends calculating the sum $$ \sum_i {C_i \over T_i } $$ for substances *i* where *C* is the observed concentration and *T* is the threshold, and this sum should be less than one.
 
 [^niosh]: From the [NIOSH Handbook](https://www.cdc.gov/niosh/npg/npgd0105.html), using the conversion 1.15 mg/m^3 per ppm
 
@@ -346,7 +346,7 @@ Some simplifying assumptions can be made
 + the wind speed *u* is a constant everywhere
 + the air is moving entirely in the x direction, i.e. $u_{y} = u_{z} = 0$ and $u_x = u$ and thus $\nabla \cdot \mathbf{u} C = u {\partial C \over \partial x} $
 + the diffusivities $D_x$, $D_y$, and $D_z$ are constant everywhere
-+ $ \left | {\partial \over \partial x} C u \right | \gg \left | {\partial^{2} \over \partial x^{2} } D_{x} C \right | $ i.e. advection is much more significant than diffusion in the x direction, leading to $ \nabla \cdot \mathbf{D} \cdot \nabla C = D_y {\partial^2 C \over \partial y^2} + D_z {\partial^2 C \over \partial z^2} $
++ advection is much more significant than diffusion in the x direction, i.e. $ \left \vert {\partial \over \partial x} C u \right \vert \gg \left \vert {\partial^{2} \over \partial x^{2} } D_{x} C \right \vert $   leading to $ \nabla \cdot \mathbf{D} \cdot \nabla C = D_y {\partial^2 C \over \partial y^2} + D_z {\partial^2 C \over \partial z^2} $
 + the system is at steady state, ${\partial C \over \partial t} = 0$
 
 Reducing the PDE to
@@ -367,7 +367,7 @@ $$ Q = \int \int C  u  dy  dz $$
 
 $$ Q = \int_{0}^{\infty} \int_{-\infty}^{\infty} {k u \over x} \exp \left[ - \left( {y^{2} \over D_{y} } + {z^{2} \over D_{z} } \right) { u \over 4x } \right] dy dz $$
 
-where the release point is assumed to be at ground level ( *z = 0* ).
+where the release point is assumed to be at ground level (*z = 0*).
 
 Making the change of variables $y' = {y \over \sqrt{D_{y} } }$ and $z' = {z \over \sqrt{D_{z} } }$ gives
 
@@ -420,6 +420,7 @@ $$ C = {Q \over 2 \pi u \sigma_{y} \sigma_{z} } \exp \left[ -\frac{1}{2} \left( 
 The $\sigma_{y}$ and $\sigma_{z}$ are functions of the downwind distance *x*. In the derivation of the model they were assumes to be linear in *x* however in practise they are typically of the form:
 
 $$ \sigma_{y} = a x^{b} $$
+
 $$ \sigma_{z} = c x^{d} $$
 
 With the constants tabulated based on the [Pasquill stability class criteria](https://en.wikipedia.org/wiki/Outline_of_air_pollution_dispersion#Characterization_of_atmospheric_turbulence). 
