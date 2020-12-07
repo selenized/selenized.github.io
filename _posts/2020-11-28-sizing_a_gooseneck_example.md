@@ -18,7 +18,6 @@ When determining the required venting for aboveground storage tanks it is typica
 
 ![image.png](/images/sizing_a_gooseneck_example_files/att1.png)
 
-
 ![image.png](/images/sizing_a_gooseneck_example_files/att2.png)
 
 It's not uncommon, though, for tanks to have gooseneck vents constructed from piping. This is fairly normal for tanks holding water, or other non-volatile substances, where the tank is open to atmosphere and there are no dangerous vapours that need to be managed. The gooseneck itself is merely to keep rain, and wildlife, out of the tank.
@@ -65,14 +64,13 @@ L = 3ft
 ϵ = 0.0457mm
 ```
 
-
 I am assuming, for simplicity, that ambient conditions are standard conditions.
 
 
 ```julia
 # Some useful physical properties of air
 R = 8.31446261815324u"Pa*m^3/mol/K" # Universal gas constant to more digits than are at all necessary
-Tₐ = 298.15u"K"                     # Standard conditions, 15°C 
+Tₐ = 288.15u"K"                     # Standard conditions, 15°C 
 Mw = 0.02896u"kg/mol"               # Molar weight of air, from Perry's
 k = 1.4                             # Ratio of heat capacities, Cp/Cv, ideal gas
 
@@ -111,11 +109,11 @@ The black line conservatively takes the max of either the laminar or turbulent f
 
 The Churchill correlation is[^3]
 
+$$ f = 8 \left( \left( \frac{8}{Re} \right)^{12} + { 1 \over {\left( A+B \right)^{3/2} } } \right)^{1/12} $$
+
 $$ A = \left( 2.457 \ln\left( {1 \over {\left( \frac{7}{Re} \right)^{0.9} + 0.27\kappa} } \right) \right)^{16} $$
 
 $$ B = \left( \frac{37530}{Re} \right)^{16} $$
-
-$$ f = 8 \left( \left( \frac{8}{Re} \right)^{12} + { 1 \over {\left( A+B \right)^{3/2} } } \right)^{1/12} $$
 
 The turbulent friction factor is the friction factor at fully turbulent flow, when *f* is no longer dependent upon the Reynolds number.
 
@@ -156,6 +154,7 @@ The Reynolds number in terms of the mass velocity is
 $$ Re = \frac{G D}{\mu} $$
 
 The only parameter in the Reynolds number which is not a constant is the viscosity, $\mu$, which is mostly dependent upon temperature and not pressure. So, to a very good first approximation, the Reynolds number is only a function of temperature. Which is very convenient.
+
 
 
 ```julia
@@ -217,8 +216,7 @@ D0 = Dᵢₙ(4inch, 12inch)
 uconvert(u"inch", D0)
 ```
 
-
-    6.443404339132202 inch
+    6.497118827423375 inch
 
 
 At this point one would typically stop for this example, compressible flow calculations are probably unnecessary.
@@ -246,6 +244,7 @@ $$ \frac{T_2}{T_1} = \left( p_1 \over p_2 \right)^{ {1-k} \over k}$$
 (pₘₐₓ/pₐ)^((1-k)/k)
 ```
 
+
     0.9813670503935878
 
 
@@ -260,6 +259,7 @@ If we assume the system is at thermal equilibrium with the outside air, then $T 
 The only unknown is *p<sub>1</sub>*, which can be solved for numerically.
 
 [^5]: *Perry's* pg 6-23 equation 6-114, this equation also neglects changes in elevation
+
 
 
 ```julia
@@ -278,7 +278,8 @@ uconvert(u"inch", D1)
 ```
 
 
-    6.4377172085806516 inch
+    6.491472166277518 inch
+
 
 
 ### Adiabatic (Fanno) Flow
@@ -361,6 +362,7 @@ While that looks complicated, each step is fairly easy. In my experience, with s
 [^10]: *Perry's* pg 6-23 equation 6-116, taking two points and canceling out the stagnation temperature
 
 
+
 ```julia
 Fa(Ma) = ((1-Ma^2)/(k*Ma^2)) + ((k+1)/(2k))*log( ((k+1)*Ma^2) / (2 + (k+1)*Ma^2))
 
@@ -413,7 +415,6 @@ end
 ```
 
 
-
 ```julia
 Dfa(Dₗ, Dᵤ) = find_zero( D -> pₘₐₓ - pfa(D)[1], (Dₗ, Dᵤ), Roots.A42())
 
@@ -422,7 +423,8 @@ D2 = Dfa(4inch, 12inch)
 uconvert(u"inch", D2)
 ```
 
-    6.431779377501573 inch
+
+    6.485474802835815 inch
 
 
 ## Minimum Diameter
@@ -432,9 +434,26 @@ At this point we have solved for the minimum vent diameter in three different wa
 In general the incompressible model will always *overestimate* the pressure drop across the vent, leading to a larger vent size, and the adiabatic flow will provide an *underestimate*, the true minimum would be somewhere between the two. This is seen much more clearly at vent diameters less than ~5in where the pressure drop is more significant, more analogous to relief piping for a pressure vessel than venting for an atmospheric storage tank. Of course all of this is assuming flow remains subsonic, if the pressure drop leads to sonic flow then things are quite different.
 
 
+```julia
+#hide
+
+pᵢₙ(D) = find_zero( p₁ -> p₁ - pₐ - 0.5*ΣK(ϵ/D,L/D,Re(D,Tₐ))*ρ((p₁ + pₐ)/2, Tₐ)*v(D)^2, pₐ)
+
+Dₗ, Dᵤ = ustrip(u"mm", 3.5inch), ustrip(u"mm", 8inch)
+
+incompressible(D) = ustrip(u"kPa", pᵢₙ(D*0.001u"m") - pₐ)
+isothermal(D) = ustrip(u"kPa", pᵢₜ( G(D*0.001u"m"), ϵ/(D*0.001u"m"), L/(D*0.001u"m"), Re(D*0.001u"m", Tₐ)) - pₐ)
+fanno(D) = ustrip(u"kPa", pfa(D*0.001u"m")[1] - pₐ)
+
+plot(title = "vent pressure drop", xlabel = "Vent Diameter (mm)", ylabel="Pressure Drop (kPa)", leg=:topright)
+plot!(incompressible, Dₗ, Dᵤ, lab = "incompressible")
+plot!(isothermal, Dₗ, Dᵤ, lab = "isothermal")
+plot!(fanno, Dₗ, Dᵤ, lab = "fanno")
+plot!(ustrip.(u"mm",[D0]), ustrip.(u"kPa",[pₘₐₓ - pₐ]), seriestype = :scatter, lab="minimum vent diameter")
+```
+
 
 ![svg](/images/sizing_a_gooseneck_example_files/output_29_0.svg)
-
 
 
 ## Concluding Remarks
@@ -446,4 +465,5 @@ The big one being all the `find_zero()` calls that rely on the initial guess bei
 Relatedly there is a lot of room to fiddle around with which root finding algorithm is employed, this intersects with a design decision I made early on to use the library `Unitful` to track units throughout and ensure unit consistency. Unfortunately it does not play nicely with all root finding algorithms, for example the Brent method, as implemented in the `Roots` library, threw a bunch of arcane errors related to unit consistency when I tried using it. To get around this one could add a step to strip out units before solving and then add them back in after.
 
 ---
+
 

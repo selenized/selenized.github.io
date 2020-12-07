@@ -39,7 +39,7 @@ kramdown:
 author:
   name   : "allan"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : ""
+  bio    : "I'm chemical engineer living in Edmonton, Alberta, Canada. Most of my projects are related to trying out new tools to solve old problems in engineering."
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
