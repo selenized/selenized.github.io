@@ -36,10 +36,13 @@ kramdown:
   auto_ids: true
   hard_wrap: false
 
+feed:
+  excerpt_only: true
+
 author:
   name   : "allan"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : "I'm chemical engineer living in Edmonton, Alberta, Canada. Most of my projects are related to trying out new tools to solve old problems in engineering."
+  bio    : "I'm chemical engineer living in Edmonton, Alberta, Canada. My interests tend towards process safety and hazard analysis."
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"

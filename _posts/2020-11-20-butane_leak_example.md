@@ -1,6 +1,5 @@
 ---
 title: "Chemical Release Screening Example - Airborne Quantity from a Butane leak"
-excerpt_separator: "<!--more-->"
 toc: true
 toc_label: "contents"
 toc_sticky: true
@@ -10,6 +9,7 @@ categories:
 tags:
   - hazard screening
   - chemical releases
+excerpt: This example calculates the airborne quantity of butane released from a leak at a butane storage sphere, considering flashing, aerosol entrainment, and pool boiling.
 ---
 
 # Chemical Release Screening Example - Airborne Quantity from a Butane leak

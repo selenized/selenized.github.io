@@ -1,6 +1,5 @@
 ---
 title: "Compressible Flow Example - Sizing a goose neck vent"
-excerpt_separator: "<!--more-->"
 toc: true
 toc_label: "contents"
 toc_sticky: true
@@ -10,6 +9,7 @@ categories:
 tags:
   - piping
   - flow
+excerpt: This example considers the design of a gooseneck vent for an atmospheric storage tank, modeling the flow as an incompressible fluid as well as considering two simple compressible flow cases.
 ---
 
 # Compressible Flow Example - Sizing a goose neck vent
@@ -21,8 +21,6 @@ When determining the required venting for aboveground storage tanks it is typica
 ![image.png](/images/sizing_a_gooseneck_example_files/att2.png)
 
 It's not uncommon, though, for tanks to have gooseneck vents constructed from piping. This is fairly normal for tanks holding water, or other non-volatile substances, where the tank is open to atmosphere and there are no dangerous vapours that need to be managed. The gooseneck itself is merely to keep rain, and wildlife, out of the tank.
-
-<!--more-->
 
 Sizing the gooseneck to match the required venting involves performing some simple compressible flow calculations, which is fairly straight-forward to set up in a generalized way such that, beyond this motivating example, it can be extended to lots of other problems. Though it isn't at all uncommon, in this particular case, for the flow calculations to be done assuming an incompressible fluid as, over the length of the gooseneck, the pressure drop is typically slight and the compressibility of the gas (air usually) is not important.
 
