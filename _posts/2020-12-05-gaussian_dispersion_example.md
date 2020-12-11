@@ -82,11 +82,11 @@ There are several ways the volumetric flow rate of flue gas could be estimated. 
 
 $$ V_s^o = F_w { 20.9 \over 20.9 \left( 1 - B_{wa} \right) - \%O_{2w} } \cdot W$$
 
-Where $V_s^o$ is the volumetric flow of flue gas at *standard conditions*, $B_{wa}$ the moisture fraction of ambient air, $\%O_{2w}$ the percentage of oxygen on a wet basis, and the parameter $F_w$ captures the differences in combustion stoichiometry for different fuels and is tabulated. Alternatively one could work out the volume of stack gas from stoichiometry of combustion, this is just a short-cut.
+Where $V_s^o$ is the volumetric flow of flue gas at *standard conditions*, $B_{wa}$ the moisture fraction of ambient air, $\%O_{2w}$ the percentage of oxygen on a wet basis, and the parameter $F_w$ captures the differences in combustion stoichiometry for different fuels and is tabulated. Alternatively one could work out the volume of stack gas from the stoichiometry of combustion, this is just a short-cut.
 
 + the default value for $B_{wa} = 0.027$
 + $\%O_{2w}$ usually ranges from 2-6% and for this case I am assuming $\%O_{2w} = 4$
-+ from Method 19 for natural gas, $F_w = 2.85 \times 10^-7 \mathrm{sm^3 \over J}$
++ from Method 19 for natural gas, $F_w = 2.85 \times 10^{-7} \mathrm{sm^3 \over J}$
 
 [^m19-1]: [EPA Method 19](https://www.epa.gov/sites/production/files/2017-08/documents/method_19.pdf) is used for calculating emissions given a measured concentration in the stack, here equation 19.2 for concentrations on a wet basis is used.
 [^m19-2]: *EPA Method 19* Table 19-2
@@ -134,10 +134,10 @@ For carbon monoxide there are three concentrations of interest[^niosh] worth con
 + the Ceiling concentration which is the level that the concentration cannot exceed
 + the Immediately Dangerous to Life and Health (IDLH) limit which is a concentration that could either kill a worker outright or render them incapable of saving themselves
 
-| Limit   | ppm                 | mg/m^3                 | 
-|---------|---------------------|------------------------| 
-| TWA     | 35                  | 40                     | 
-| Ceiling | 200                 | 229                    | 
+| Limit   | ppm                 | mg/m^3                 |
+|---------|---------------------|------------------------|
+| TWA     | 35                  | 40                     |
+| Ceiling | 200                 | 229                    |
 | IDLH    | 1200                | 1380                   |
 
 
@@ -154,7 +154,7 @@ Ceil = uconvert(u"kg/m^3", 229u"mg/m^3")
 IDLH = uconvert(u"kg/m^3", 1380u"mg/m^3")
 ```
 
-We can check if the stack gas concentration at the exit, if it does not exceed the TWA then there is no reason to proceed with the calculations as a worker could work *in the stack* and not exceed the limits, they certainly not exceed the limits after the plume mixed with ambient air.
+We can check if the stack gas concentration at the exit exceeds the TWA. If it does not exceed the TWA then there is no reason to proceed with the calculations as a worker could work *in the stack* and not exceed the limits and they certainly would not exceed the limits after the plume mixed with ambient air.
 
 
 ```julia
@@ -184,12 +184,7 @@ Suppose a wind-speed of 1.5m/s at the stack height, just arbitrarily.
 uₛ = 1.5u"m/s"
 ```
 
-
-
-
     1.5 m s^-1
-
-
 
 ### Atmospheric Stability
 
@@ -198,13 +193,14 @@ The atmospheric stability relates to the vertical mixing of the air due to a tem
 ![image.png](/images/gaussian_dispersion_example_files/att1.png)
 
 This is captured by the atmospheric stability parameter $s$ which is given by[^isc-1]
+
 $$ s = \frac{g}{T_a} { \partial \theta \over \partial z } $$
 
 Where $ \partial \theta \over \partial z $ is the lapse rate in K/m
 
-The "worst-case" is the case with the least mixing and in this case corresponds to a class F [Pasquill stability](https://en.wikipedia.org/wiki/Outline_of_air_pollution_dispersion#Characterization_of_atmospheric_turbulence), i.e. very stable, which has a corresponding default lapse rate of ${ \partial \theta \over \partial z } = 0.035 K/m$[^isc-2]
+The "worst-case" is the case with the least mixing and corresponds to a class F [Pasquill stability](https://en.wikipedia.org/wiki/Outline_of_air_pollution_dispersion#Characterization_of_atmospheric_turbulence), i.e. very stable, which has a corresponding default lapse rate of ${ \partial \theta \over \partial z } = 0.035 K/m$[^isc-2]
 
-**Addendum** this isn't entirely true. For neutrally buoyant plumes released at ground level, or in this case level with the elevated work platform, class F is likely the worst case. For buoyant plumes released at elevation the minimal vertical dispersion with stable atmospheres means the bulk of the plume will rise and be dispersed far above the ground and another class and wind-speed should be considered. See *Guidelines for Use of Vapour Cloud Dispersion Models, 2nd Ed.* section 5.8 for more details
+**Addendum:** this isn't entirely true. For neutrally buoyant plumes released at ground level, or in this case level with the elevated work platform, class F is likely the worst case. For buoyant plumes released at elevation the minimal vertical dispersion with stable atmospheres means the bulk of the plume will rise and be dispersed far above the ground and another class and wind-speed should be considered. See *Guidelines for Use of Vapour Cloud Dispersion Models, 2nd Ed.* section 5.8 for more details
 
 [^isc-1]: *EPA-454/B-95-003b User's Guide for the ISC3 Dispersion Models*, 1995 page 1-9 equation 1-17
 
@@ -231,7 +227,7 @@ As a first check, verify that stack down-wash will not be relevant. For low mome
 
 Where $v_s$ is the stack exit velocity and is calculated from the volumetric flow as
 
-$$ v_s = { V_s \over A_s} = { V_s \over \frac{\pi}{4} D^2 } $$ 
+$$ v_s = { V_s \over A_s} = { V_s \over \frac{\pi}{4} D^2 } $$
 
 
 ```julia
@@ -303,15 +299,15 @@ xf = 2.0715*uₛ/√(s)
 ```julia
 function Δh(x; Fb, u, s)
     xf = 2.0715*u/√(s)
-    
+
     if x < xf
         return 1.60*(Fb*x^2/u^3)^(1/3)
     else
         return 2.6*(Fb/(u*s))^(1/3)
     end
-    
+
 end
-    
+
 Δh(x) = Δh(x, Fb=Fb, u=uₛ, s=s)
 ```
 
@@ -331,7 +327,7 @@ As the plume is carried downwind it will mix with the ambient air and the pollut
 
 ### A Differential Mass Balance
 
-Starting with a coordinate system centered at the top of the stack, which is emitting a mass flow of *Q* kg/s, which is assumed to be released from a point, the [advection-diffusion equation](https://en.wikipedia.org/wiki/Convection%E2%80%93diffusion_equation) for mass describes a mass balance over a differential volume element
+Starting with a coordinate system centered at the top of the stack, emitting a mass flow of *Q* kg/s, which is assumed to be released from a point, the [advection-diffusion equation](https://en.wikipedia.org/wiki/Convection%E2%80%93diffusion_equation) for mass can be written as
 
 $$ {\partial C \over \partial t} = - \nabla \cdot \mathbf{D} \cdot \nabla C + \nabla \cdot \mathbf{u} C $$
 
@@ -341,7 +337,7 @@ Some simplifying assumptions can be made
 + the wind speed *u* is a constant everywhere
 + the air is moving entirely in the x direction, i.e. $u_{y} = u_{z} = 0$ and $u_x = u$ and thus $\nabla \cdot \mathbf{u} C = u {\partial C \over \partial x} $
 + the diffusivities $D_x$, $D_y$, and $D_z$ are constant everywhere
-+ $ \left | {\partial \over \partial x} C u \right | \gg \left | {\partial^{2} \over \partial x^{2} } D_{x} C \right | $ i.e. advection is much more significant than diffusion in the x direction, leading to $ \nabla \cdot \mathbf{D} \cdot \nabla C = D_y {\partial^2 C \over \partial y^2} + D_z {\partial^2 C \over \partial z^2} $
++ advection is much more significant than diffusion in the x direction i.e. $ \left \vert {\partial \over \partial x} C u \right \vert \gg \left \vert {\partial^{2} \over \partial x^{2} } D_{x} C \right \vert $, leading to $ \nabla \cdot \mathbf{D} \cdot \nabla C = D_y {\partial^2 C \over \partial y^2} + D_z {\partial^2 C \over \partial z^2} $
 + the system is at steady state, ${\partial C \over \partial t} = 0$
 
 Reducing the PDE to
@@ -362,7 +358,7 @@ $$ Q = \int \int C  u  dy  dz $$
 
 $$ Q = \int_{0}^{\infty} \int_{-\infty}^{\infty} {k u \over x} \exp \left[ - \left( {y^{2} \over D_{y} } + {z^{2} \over D_{z} } \right) { u \over 4x } \right] dy dz $$
 
-where the release point is assumed to be at ground level ( *z = 0* ).
+where the release point is assumed to be at ground level (*z=0*).
 
 Making the change of variables $y' = {y \over \sqrt{D_{y} } }$ and $z' = {z \over \sqrt{D_{z} } }$ gives
 
@@ -415,11 +411,12 @@ $$ C = {Q \over 2 \pi u \sigma_{y} \sigma_{z} } \exp \left[ -\frac{1}{2} \left( 
 The $\sigma_{y}$ and $\sigma_{z}$ are functions of the downwind distance *x*. In the derivation of the model they were assumes to be linear in *x* however in practice they are typically of the form:
 
 $$ \sigma_{y} = a x^{b} $$
+
 $$ \sigma_{z} = c x^{d} $$
 
-With the constants tabulated based on the [Pasquill stability class criteria](https://en.wikipedia.org/wiki/Outline_of_air_pollution_dispersion#Characterization_of_atmospheric_turbulence). 
+With the constants tabulated based on the [Pasquill stability class criteria](https://en.wikipedia.org/wiki/Outline_of_air_pollution_dispersion#Characterization_of_atmospheric_turbulence).
 
-What follows is essentially some look-up tables mapping functions for $\sigma_{y}$ and $\sigma_{z}$ to the respective Pasquill stability class. The particular correlations come from *Lees'*[^lee].
+These particular correlations come from *Lees'*[^lee] and are for a Pasquill stability class F
 
 
 [^lee]: Mannan, Sam. (2012). *Lees’ Loss Prevention in the Process Industries, Volumes 1-3 - Hazard Identification, Assessment and Control (4th Edition)*, Elsevier, pg 860 Table 15.46. *Note* there is a typo in *Lees'* for the $\sigma_{z}$ corresponding to class F stability. For $x>500$ it is given as $$ \sigma_{z} = 10^{(1.91 - 1.37 \log(x) - 0.119 \log(x)^2)} $$ when it should be (note the signs) $$ \sigma_{z} = 10^{(-1.91 + 1.37 \log(x) - 0.119 \log(x)^2)} $$
@@ -478,9 +475,11 @@ function C(x, y, z; Q, u, hₛ, Δh::Function, σy::Function, σz::Function)
     hₑ  = hₛ + Δh(x)
     σyₑ = √( (Δh(x)/3.5)^2 + σy(x)^2 )
     σzₑ = √( (Δh(x)/3.5)^2 + σz(x)^2 )
-    
-    C = (Q/(2*π*u*σyₑ*σzₑ)) * exp(-0.5*(y/σyₑ)^2) * ( exp(-0.5*((z-hₑ)/σzₑ)^2) + exp(-0.5*((z+hₑ)/σzₑ)^2) )
-    
+
+    C = (Q/(2*π*u*σyₑ*σzₑ)) *
+         exp(-0.5*(y/σyₑ)^2) *
+         ( exp(-0.5*((z-hₑ)/σzₑ)^2) + exp(-0.5*((z+hₑ)/σzₑ)^2) )
+
 end
 
 C(x,y,z) = C(x,y,z, Q=Q, u=uₛ, hₛ=hₛ, Δh=Δh, σy=σy, σz=σz)
@@ -532,13 +531,11 @@ C(x₁, 0u"m", h₁) > TWA
 
 This model assumed a continuous, steady-state, flow of stack gases. Boilers don't always operate that way and the model did not, for example, consider start-up or upset conditions that could lead to higher in-stack concentrations of carbon monoxide.
 
-The model also assumed mixing was captured by a simple gaussian dispersion model that does not account for variability of wind-speed either with time or spatially -- wind-speed typically increases with height -- in this case I believe the model underestimates the degree of mixing. Furthermore it does not account for interactions with buildings and potential down-wash, which can be very significant.
+The model also assumed mixing was captured by a simple gaussian dispersion model. This model does not, for example, account for variability of wind-speed either with time or spatially -- wind-speed typically increases with height -- in this case I believe the model underestimates the degree of mixing. Nor it does not account for interactions with buildings and potential down-wash, which can be very significant.
 
-This also assumes no other sources of carbon monoxide, both at the facility surrounding the worksite but also potentially from some portable equipment. 
+This also assumes no other sources of carbon monoxide, both at the facility surrounding the worksite but also potentially from some portable equipment.
 
-I think in practice, while modeling like this might be informative about the potential hazards, it is always good practise to develop a monitoring plan for the work area that includes the flue gases and any other potential substances to ensure workers on the scaffolding are not being exposed.
+I think that, while modeling like this might be informative about the potential hazards, it is always good practise to develop a monitoring plan for the work area that includes the flue gases and any other potential substances to ensure workers on the scaffolding are not being exposed.
 
 
 ----
-
-
