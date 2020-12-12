@@ -27,7 +27,7 @@ I am not going to repeat all of the assumptions and working out of the previous 
 
 As a refresher, Pasquill stability classes are a qualitative way of describing the atmospheric stability -- the tendency of the atmosphere to resist or enhance vertical motion. Stability is itself related to the temperature gradient with height, wind speed, and various other things. For a simple model such as this the key model parameters are tabulated with respect to the Pasquill stability, which is why it is relevant to this discussion.
 
-#### Pasquill Stability Classes
+### Pasquill Stability Classes
 
 | Stability Class | Description                | 
 |-----------------|----------------------------| 
@@ -52,6 +52,7 @@ We note that, as we expect, lower stability (e.g. A or B) corresponds to a highe
 
 At first blush it would appear that class F is still the worst case, however this plot naively assumes atmospheric stability is unrelated to windspeed. This is not true and roughly speaking the stability transitions towards classes C and D as the windspeed increases.
 
+### Pasquill Stability and Windspeed
 
 #### Pasquill Stability vs Incoming Solar Radiation
 
