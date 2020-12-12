@@ -52,7 +52,9 @@ We note that, as we expect, lower stability (e.g. A or B) corresponds to a highe
 
 At first blush it would appear that class F is still the worst case, however this plot naively assumes atmospheric stability is unrelated to windspeed. This is not true and roughly speaking the stability transitions towards classes C and D as the windspeed increases.
 
+
 #### Pasquill Stability vs Incoming Solar Radiation
+
 | Windspeed (m/s) | Strong | Moderate | Slight | 
 |:---------------:|:------:|:--------:|:------:| 
 | < 2             | A      |  A - B   | B      | 
@@ -61,7 +63,9 @@ At first blush it would appear that class F is still the worst case, however thi
 | 5 - 6           | C      | C - D    | D      | 
 | > 6             | C      | D        | D      | 
 
+
 #### Pasquill Stability vs Nighttime Cloud Cover
+
 | Windspeed (m/s) | > 4/8 cloud | < 3/8 cloud | 
 |:---------------:|:-----------:|:-----------:| 
 | < 2             |             |             | 
@@ -179,9 +183,9 @@ Below are a series of contour plots showing the dilution $\chi$, where colours a
 
 *Note:* This is backwards to the usual way of defining dilution, where a $\chi$ of 5% would be a 95% dilution.
 
-[^state:] at standard state, because the concentrations given for the occupational exposure limits are given in terms of a volume at standard state. This is also a potential error in the original model as it does not correct the concentrations back to standard state, nor does it really track temperature to make that even possible, especially near the stack.
+[^state]: at standard state, because the concentrations given for the occupational exposure limits are given in terms of a volume at standard state. This is also a potential error in the original model as it does not correct the concentrations back to standard state, nor does it really track temperature to make that even possible, especially near the stack.
 
-[^oel:] from [CCOHS](https://www.ccohs.ca/oshanswers/hsprograms/occ_hygiene/occ_exposure_limits.html)
+[^oel]: from [CCOHS](https://www.ccohs.ca/oshanswers/hsprograms/occ_hygiene/occ_exposure_limits.html)
 
 
 ![svg](/images/worst_case_weather_files/output_17_0.svg)
