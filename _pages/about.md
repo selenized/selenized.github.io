@@ -17,6 +17,6 @@ And let's not forget that I can simply be wrong!
 
 ## technical details
 
-Each post has a [corresponding notebook](https://github.com/selenized/selenized.github.io/tree/main/_notebooks) which should be a stand alone document. The notebooks also include a bunch of boiler plate, especially for importing modules and generating plots, if you want to run any of the code presented I recommend downloading the notebook and running that.
+Each post has a [corresponding notebook](https://nbviewer.jupyter.org/github/selenized/selenized.github.io/tree/main/_notebooks/) which should be a stand alone document. The notebooks also include a bunch of boiler plate, especially for importing modules and generating plots, if you want to run any of the code presented I recommend downloading the notebook and running that.
 
 The notebooks are [jupyter notebooks](https://jupyter.org/) and running either [Julia](https://julialang.org/) or [Python](https://www.python.org/).

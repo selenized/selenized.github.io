@@ -18,7 +18,7 @@ In a [previous post](https://selenized.github.io/2020/12/05/gaussian_dispersion_
 
 For neutrally buoyant releases at or near ground-level that is a common "worst case", for example when considering the potential impact due to a vapour cloud explosion. But for elevated stacks, releasing a buoyant plume, a class D stability with a moderate windspeed is often recommended. I thought it would be interesting to explore how the maximum concentration at the point of interest -- an elevated work area downwind of the stack -- varies with stability class and windspeed.
 
-I am not going to repeat all of the assumptions and working out of the previous notebook, the important results are in the source code for this post. I have also re-defined some of the functions to be a little more re-useable and to represent other stability cases not covered in the original notebook. See the jupyter notebook [here](https://github.com/selenized/selenized.github.io/tree/main/_notebooks).
+I am not going to repeat all of the assumptions and working out of the previous notebook, the important results are in the source code for this post. I have also re-defined some of the functions to be a little more re-useable and to represent other stability cases not covered in the original notebook. See the jupyter notebook [here](https://nbviewer.jupyter.org/github/selenized/selenized.github.io/blob/main/_notebooks/2020-12-12-worst_case_weather.ipynb).
 
 
 
@@ -29,14 +29,14 @@ As a refresher, Pasquill stability classes are a qualitative way of describing t
 
 ### Pasquill Stability Classes
 
-| Stability Class | Description                | 
-|-----------------|----------------------------| 
-| A               | Extremely unstable         | 
-| B               | Unstable                   | 
-| C               | Slightly unstable          | 
-| D               | Neutral                    | 
-| E               | Slightly stable            | 
-| F               | Stable to extremely stable | 
+| Stability Class | Description                |
+|-----------------|----------------------------|
+| A               | Extremely unstable         |
+| B               | Unstable                   |
+| C               | Slightly unstable          |
+| D               | Neutral                    |
+| E               | Slightly stable            |
+| F               | Stable to extremely stable |
 
 In general the more stable the class the less dispersion, and thus the higher the concentration within the plume. Which is why class F is typically used for a ground level, neutrally buoyant, cloud. However plume rise is also a function of stability and, in general, more stable plumes rise without as much dispersion and thus the *ground level* concentration is lower than if the plume dispersed more. Furthermore the plume rise is a function of windspeed, the greater the windspeed the less the plume rises before leveling off and, again, the greater the ground level concentration.
 
@@ -56,24 +56,24 @@ At first blush it would appear that class F is still the worst case, however thi
 
 #### Pasquill Stability vs Incoming Solar Radiation
 
-| Windspeed (m/s) | Strong | Moderate | Slight | 
-|:---------------:|:------:|:--------:|:------:| 
-| < 2             | A      |  A - B   | B      | 
-| 2 - 3           | A - B  | B        | C      | 
-| 3 - 5           | B      | B - C    | C      | 
-| 5 - 6           | C      | C - D    | D      | 
-| > 6             | C      | D        | D      | 
+| Windspeed (m/s) | Strong | Moderate | Slight |
+|:---------------:|:------:|:--------:|:------:|
+| < 2             | A      |  A - B   | B      |
+| 2 - 3           | A - B  | B        | C      |
+| 3 - 5           | B      | B - C    | C      |
+| 5 - 6           | C      | C - D    | D      |
+| > 6             | C      | D        | D      |
 
 
 #### Pasquill Stability vs Nighttime Cloud Cover
 
-| Windspeed (m/s) | > 4/8 cloud | < 3/8 cloud | 
-|:---------------:|:-----------:|:-----------:| 
-| < 2             |             |             | 
-| 2 - 3           | E           | F           | 
-| 3 - 5           | D           | E           | 
-| 5 - 6           | D           | D           | 
-| > 6             | D           | D           | 
+| Windspeed (m/s) | > 4/8 cloud | < 3/8 cloud |
+|:---------------:|:-----------:|:-----------:|
+| < 2             |             |             |
+| 2 - 3           | E           | F           |
+| 3 - 5           | D           | E           |
+| 5 - 6           | D           | D           |
+| > 6             | D           | D           |
 
 To represent this crudely, the plots can be chopped off at the windspeed limits from the tables above. So, for example, the class F plot would end at 3m/s.
 
@@ -90,13 +90,13 @@ h₁′ = ustrip(h₁)
 Q′  = ustrip(Q)
 hₛ′ = ustrip(hₛ)
 
-∂Cᵤ(u) = ForwardDiff.derivative(u -> C(u, x=x₁′, 
-                                          y=0.0, 
-                                          z=h₁′, 
-                                          Q=Q′, 
-                                          h=hₛ′, 
-                                          Δh=(x,u) -> Δhᵣ(x, u, Fb=Fb′, stable=false), 
-                                          σy=σy("D"), 
+∂Cᵤ(u) = ForwardDiff.derivative(u -> C(u, x=x₁′,
+                                          y=0.0,
+                                          z=h₁′,
+                                          Q=Q′,
+                                          h=hₛ′,
+                                          Δh=(x,u) -> Δhᵣ(x, u, Fb=Fb′, stable=false),
+                                          σy=σy("D"),
                                           σz=σz("D")), float(u))
 ```
 
@@ -108,12 +108,12 @@ hₛ′ = ustrip(hₛ)
 
 u_worst = find_zero(∂Cᵤ, 25)
 
-C_worst = C(x₁, 0.0u"m", h₁, 
-            u=u_worst*1u"m/s", 
-            Q=Q, 
-            h=hₛ, 
-            Δh=(x,u) -> Δhᵣ(x, u, Fb=Fb, stable=false), 
-            σy=σy("D"), 
+C_worst = C(x₁, 0.0u"m", h₁,
+            u=u_worst*1u"m/s",
+            Q=Q,
+            h=hₛ,
+            Δh=(x,u) -> Δhᵣ(x, u, Fb=Fb, stable=false),
+            σy=σy("D"),
             σz=σz("D"))
 
 uconvert(u"mg/m^3", C_worst)
@@ -129,7 +129,7 @@ uconvert(u"mg/m^3", C_worst)
 
 We find that the worst case is indeed class D but with quite a high windspeed, ~26.4m/s or 95kph, which would be considered a 10 on the [Beaufort scale](https://www.canada.ca/en/environment-climate-change/services/general-marine-weather-information/understanding-forecasts/beaufort-wind-scale-table.html) with trees being uprooted and considerable structural damage. It's unlikely that workers would still be on the platform and it may not even be the case that the scaffolding would still be standing!
 
-Regardless we can look at the contour plots at the work platform elevation and vertically, along the centerline. 
+Regardless we can look at the contour plots at the work platform elevation and vertically, along the centerline.
 
 *Note* the colours are scaled to 4mg/m^3, one tenth the occupational limit of 40mg/m^3.
 
@@ -158,7 +158,7 @@ Assuming the in-stack concentration to be simply the mass emission rate of *i* d
 
 $$ C_{s,i} = { Q_i \over V_s^o } $$
 
-and recalling the concentration function from the gaussian dispersion model 
+and recalling the concentration function from the gaussian dispersion model
 
 $$ C_i \left( x, y, z \right) = {Q_i \over 2 \pi u \sigma_{ye} \sigma_{ze} } f \left( x, y, z \right) $$
 
@@ -180,7 +180,7 @@ where $T_i$ is the relevant occupational exposure limit.
 
 To recap, instead of calculating the concentrations at the points of interest using a gaussian dispersion model multiple times, calculate a dimensionless *dilution* at the points of interest and apply that to the in stack concentrations of all of the substances of interest. Then combine those as per the relevant rules for occupational hygiene.
 
-Below are a series of contour plots showing the dilution $\chi$, where colours are are from 0-5% -- i.e. the concentration within the yellow region is &ge; 5% the in-stack concentration. 
+Below are a series of contour plots showing the dilution $\chi$, where colours are are from 0-5% -- i.e. the concentration within the yellow region is &ge; 5% the in-stack concentration.
 
 *Note:* This is backwards to the usual way of defining dilution, where a $\chi$ of 5% would be a 95% dilution.
 
@@ -238,4 +238,3 @@ end
 Where we convert the input to the expected units, whatever they may be, evaluate the function in a unitless way, then tack on the expected output units at the end. Now when we use *f(x)* in contexts without units, for example when plotting *f(x)*, it works as expected and if we pass a value of *x* with units attached we get the unit conversion/checking that we want from `Unitful`.
 
 ---
-
