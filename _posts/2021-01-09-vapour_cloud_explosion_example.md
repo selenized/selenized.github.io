@@ -9,6 +9,7 @@ categories:
 tags:
   - air dispersion modeling
   - explosion
+  - hazard screening
 excerpt: This example uses the Baker-Strehlow-Tang model to evaluate the consequences of a vapour cloud explosion.
 ---
 
